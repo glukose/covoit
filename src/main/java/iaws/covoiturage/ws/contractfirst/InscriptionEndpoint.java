@@ -29,8 +29,15 @@ private InscriptionService inscriptionService;
 			@XPathParam("/InscriptionRequest/Prof/mail") String mail,			
 			@XPathParam("/InscriptionRequest/Prof/adresse") String adresse) throws Exception {
 
+		//get latitude et longitude
 		double latitude = 0.00;
 		double longitude = 0.00;
+		
+		//renvoi message erreur si email déjà utilisé
+		
+		//renvoi message erreur si email pas conforme
+		
+		//renvoi message erreur si adresse postale inconnue
 		
 		Prof p = new Prof(nom, prenom, mail, adresse, latitude, longitude);
 				
