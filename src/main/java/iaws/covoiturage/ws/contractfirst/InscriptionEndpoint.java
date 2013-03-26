@@ -7,7 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import org.springframework.ws.server.endpoint.annotation.XPathParam;
 
-import domain.Identite;
+import domain.Prof;
 
 import services.InscriptionService;
 
@@ -24,16 +24,17 @@ private InscriptionService inscriptionService;
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "InscriptionXMLRequest")
 	@ResponsePayload
-	public Element handleInscriptionRequest(@XPathParam("/InscriptionXMLRequest/Identite/Nom") String nom,
-			@XPathParam("/InscriptionXMLRequest/Identite/Prenom") String prenom
-			) throws Exception {
+	public Element handleInscriptionRequest(@XPathParam("/InscriptionRequest/Prof/nom") String nom,
+			@XPathParam("/InscriptionRequest/Prof/prenom") String prenom,
+			@XPathParam("/InscriptionRequest/Prof/mail") String mail,			
+			@XPathParam("/InscriptionRequest/Prof/adresse") String adresse) throws Exception {
+
+		double latitude = 0.00;
+		double longitude = 0.00;
 		
-		System.out.println("-- nom du prof : " + nom);
-		System.out.println("-- prenom prof : " + prenom);		
-		
-		Identite prof = new Identite(nom, prenom);
+		Prof p = new Prof(nom, prenom, mail, adresse, latitude, longitude);
 				
-		Element resp = inscriptionService.rajouterProf(prof);
+		Element resp = inscriptionService.rajouterProf(p);
 		
 		return resp;
 	}

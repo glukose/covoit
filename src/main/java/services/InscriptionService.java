@@ -2,7 +2,7 @@ package services;
 
 import javax.swing.text.Element;
 
-import domain.Identite;
+import domain.Prof;
 
 
 public interface InscriptionService {
@@ -13,6 +13,6 @@ public interface InscriptionService {
      * @param prenom le prenom 
      * @return les évaluations correspondant aux critères fournis
      */
-	public Element rajouterProf(Identite prof);
+	public Element rajouterProf(Prof prof);
 
 }
