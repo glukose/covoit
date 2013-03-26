@@ -13,6 +13,7 @@ public interface InscriptionService {
      * @param prenom le prenom 
      * @return les évaluations correspondant aux critères fournis
      */
-	public Element rajouterProf(Prof prof);
+	public Element rajouterProf(String nom2, String prenom2, String mail2, String adresse2,
+			double latitude2, double longitude2);
 
 }
