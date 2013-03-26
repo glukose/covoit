@@ -1,0 +1,13 @@
+*.class
+<<<<<<< HEAD
+target
+.settings
+.classpath
+.project
+=======
+
+# Package Files #
+*.jar
+*.war
+*.ear
+>>>>>>> c03c4f12a8c8ce60be922ed8ae6c368ce6b9b9f0
