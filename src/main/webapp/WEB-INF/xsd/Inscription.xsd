@@ -1,0 +1,19 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:hr="http://iaws/ws/contractfirst/exemple"
+        elementFormDefault="qualified"
+        targetNamespace="http://iaws/ws/contractfirst/exemple">
+        
+        
+    <xs:element name="InscriptionXMLRequest" type="exem:InscriptionRequestType" xmlns:exem="http://iaws/ws/contractfirst/exemple"/>
+    
+        <xs:complexType name="InscriptionRequestType">
+            <xs:all>
+                <xs:element name="nom" type="xs:string"/>
+            	<xs:element name="prenom" type="xs:string"/> 
+				<xs:element name="mail" type="xs:string"/>					
+				<xs:element name="adresse" type="xs:string"/>
+            </xs:all>
+        </xs:complexType>
+    
+    
+</xs:schema>
