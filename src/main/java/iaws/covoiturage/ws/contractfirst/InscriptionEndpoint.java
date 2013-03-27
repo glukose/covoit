@@ -24,10 +24,10 @@ private InscriptionService inscriptionService;
 	
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "InscriptionXMLRequest")
 	@ResponsePayload
-	public Element handleInscriptionRequest(@XPathParam("/InscriptionRequest/Prof/nom") String nom,
-			@XPathParam("/InscriptionRequest/Prof/prenom") String prenom,
-			@XPathParam("/InscriptionRequest/Prof/mail") String mail,			
-			@XPathParam("/InscriptionRequest/Prof/adresse") String adresse) throws Exception {
+	public Element handleInscriptionRequest(@XPathParam("/InscriptionRequest/nom") String nom,
+			@XPathParam("/InscriptionRequest/prenom") String prenom,
+			@XPathParam("/InscriptionRequest/mail") String mail,			
+			@XPathParam("/InscriptionRequest/adresse") String adresse) throws Exception {
 
 		//get latitude et longitude
 		double latitude = 0.00;

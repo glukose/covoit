@@ -3,6 +3,6 @@
 	xsi:schemaLocation="http://iaws/ws/contractfirst/exemple Inscription.xsd">
 	<nom>Enretard</nom>
 	<prenom>Bernard</prenom>
-	<mail>toto@</mail>
+	<mail>toto@univ-tlse3.fr</mail>
 	<adresse>14 rue des moulins, Toulouse</adresse>
 </ReleveNotesRequest>
