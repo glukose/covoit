@@ -1,10 +1,11 @@
 package services.impl;
+import services.*;
 
-import javax.swing.text.Element;
+import org.w3c.dom.Element;
 
 import domain.Prof;
 
-public class InscriptionServiceImpl {
+public class InscriptionServiceImpl implements InscriptionService {
 
 	/**
      * Rajoute un nouvel utilisateur dans la base

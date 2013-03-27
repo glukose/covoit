@@ -1,6 +1,6 @@
 package services;
 
-import javax.swing.text.Element;
+import org.w3c.dom.Element;
 
 import domain.Prof;
 

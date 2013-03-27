@@ -1,13 +1,12 @@
 package iaws.covoiturage.ws.contractfirst;
 
-import javax.swing.text.Element;
-
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 import org.springframework.ws.server.endpoint.annotation.XPathParam;
 
 import domain.Prof;
+import org.w3c.dom.Element;
 
 import services.InscriptionService;
 
@@ -34,9 +33,11 @@ private InscriptionService inscriptionService;
 		double longitude = 0.00;
 		
 				
-		Element resp = inscriptionService.rajouterProf(nom, prenom, mail, adresse, latitude, longitude);
+		//Element rep = inscriptionService.rajouterProf(nom, prenom, mail, adresse, latitude, longitude);
 		
-		return resp;
+		Element test = XmlHelper.getRootElementFromFileInClasspath("Inscription.xml");
+		
+		return test;
 	}
 
 }
