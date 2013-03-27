@@ -1,5 +1,6 @@
 package services.impl;
 
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -12,29 +13,31 @@ import java.io.StringReader;
 
 import javax.swing.text.Element;
 
-import domain.MailException;
-import domain.MailNonconformeException;
-import domain.Prof;
+import services.InscriptionService;
 
-public class InscriptionServiceImpl {
+
+
+public class InscriptionServiceImpl implements InscriptionService{
 
 	/**
      * Rajoute un nouvel utilisateur dans la base
      * @param nom nom du prof
      * @param prenom le prenom 
-     * @return les évaluations correspondant aux critères fournis
+     * @return les évaluations correspondant aux critères fournis 
      */
 	public Element rajouterProf(String nom, String prenom, String mail, String adresse,
-			double latitude, double longitude) {
+			double latitude, double longitude){
 		
-		
+		Element elem = null;
 		try
 		{
 			//renvoi message erreur si email déjà utilisé  CODE 100
-			if (rechercheMail(mail) == false) throw new MailException();
+			if (rechercheMail(mail) == true) return elem;
+			//System.out.println(rechercheMail(mail));
 		
 			//renvoi message erreur si email pas conforme  CODE 110 
-			if (confirmMail(mail) == false) throw new MailNonconformeException();	
+			if (confirmMail(mail) == false) return elem;	
+			//System.out.println(confirmMail(mail));
 			
 			//renvoi message erreur si adresse postale inconnue  CODE erreur 200
 			//ça je m'en occupe		
@@ -42,8 +45,8 @@ public class InscriptionServiceImpl {
 		
 			//rajouter le prof dans le fichier
 			
-			//on va chercher le chemin et le nom du fichier et on me tout ca dans un String
-	        String adressedufichier = System.getProperty("user.dir") + "/fichier.txt";
+			//on va chercher le chemin et le nom du fichier
+	        String adressedufichier = System.getProperty("user.dir") + "/src/main/java/domain" + "/fichier.txt";
 	        System.out.print(adressedufichier);
 	
 	        //on met try si jamais il y a une exception
@@ -108,9 +111,6 @@ public class InscriptionServiceImpl {
 	        
          
 		}
-        catch (MailException m){}
-		
-		catch (MailNonconformeException m2) {}
 		
         catch(IOException ioe){
                 System.out.print("Erreur : ");
@@ -119,19 +119,22 @@ public class InscriptionServiceImpl {
 		
 		//retourner réponse XML de bonne inscription
 		
-		return null;
+		return elem;
 	}
 	
-	public Boolean rechercheMail(String mail) throws MailException{
+	public Boolean rechercheMail(String mail){
 		
-		String fichier ="fichier.txt";
+		//String fichier ="fichier.txt";
 		Boolean trouve=false;
 		int index_debut = 0;
 		int index_fin = 0 ;
 		
+		String adressedufichier = System.getProperty("user.dir") + "/src/main/java/domain" + "/fichier.txt";
+        System.out.print(adressedufichier);
+		
 		//lecture du fichier texte	
 		try{
-			InputStream ips=new FileInputStream(fichier); 
+			InputStream ips=new FileInputStream(adressedufichier); 
 			InputStreamReader ipsr=new InputStreamReader(ips);
 			BufferedReader br=new BufferedReader(ipsr);
 			String ligne;
@@ -141,9 +144,13 @@ public class InscriptionServiceImpl {
 				//IL faut recuperer les mails.
 				//On cherche les positions des balises ouvrante et fermante.
 				//Puis on recupere dans un string ce qu'il y a entre ces deux balises
-				ligne.indexOf("<mail>", 0);
-				ligne.indexOf("</mail>", index_debut);
+				index_debut=ligne.indexOf("<mail>", 0) + 6;
+				index_fin=ligne.indexOf("</mail>", index_debut);
 				String fichierMail = ligne.substring(index_debut, index_fin);
+				System.out.println(ligne);
+				System.out.println(fichierMail);
+				System.out.println(index_debut);
+				System.out.println(index_fin);
 				
 				//On compare les mails
 				if(mail.equals(fichierMail)==true) trouve = true;
@@ -166,10 +173,13 @@ public class InscriptionServiceImpl {
 		
 		//On cherche la position du symbole "@", si il n'y en a pas
 		//alors ça retourne -1.
-		if(mail.indexOf("@")==-1){
+		if(mail.indexOf("@univ-tlse3.fr")==-1){
 			trouve = false;
 		}
 
 		return trouve;
 	}
+	
+	
+	
 }
