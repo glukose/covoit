@@ -1,0 +1,6 @@
+<ReleveNotesRequest xmlns="http://iaws/ws/contractfirst/exemple"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://iaws/ws/contractfirst/exemple CodeErreur.xsd">
+	<code>110</code>
+	<texte>Le mail n'est pas de la forme @univ-tlse3.fr</texte>	
+</ReleveNotesRequest>

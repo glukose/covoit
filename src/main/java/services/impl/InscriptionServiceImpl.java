@@ -2,6 +2,9 @@ package services.impl;
 import services.*;
 
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
+
+import iaws.covoiturage.ws.contractfirst.XmlHelper;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -12,6 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import services.InscriptionService;
 
@@ -28,14 +33,38 @@ public class InscriptionServiceImpl implements InscriptionService{
 			double latitude, double longitude){
 		
 		Element elem = null;
+		Boolean mailValide = true;
 		try
 		{
 			//renvoi message erreur si email déjà utilisé  CODE 100
-			if (rechercheMail(mail) == true) return elem;
+			if (rechercheMail(mail) == true){
+				mailValide=false;
+				try {
+					elem = XmlHelper.getRootElementFromFileInClasspath("ErreurCode100.xml");
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			//System.out.println(rechercheMail(mail));
 		
 			//renvoi message erreur si email pas conforme  CODE 110 
-			if (confirmMail(mail) == false) return elem;	
+			if (confirmMail(mail) == false){
+				
+				mailValide=false;
+				try {
+					elem = XmlHelper.getRootElementFromFileInClasspath("ErreurCode110.xml");
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 			//System.out.println(confirmMail(mail));
 			
 			//renvoi message erreur si adresse postale inconnue  CODE erreur 200
@@ -43,72 +72,75 @@ public class InscriptionServiceImpl implements InscriptionService{
 		
 		
 			//rajouter le prof dans le fichier
+			if (mailValide)
+			{
+				
 			
-			//on va chercher le chemin et le nom du fichier
-	        String adressedufichier = System.getProperty("user.dir") + "/src/main/java/domain" + "/fichier.txt";
-	        System.out.print(adressedufichier);
+				//on va chercher le chemin et le nom du fichier
+		        String adressedufichier = System.getProperty("user.dir") + "/src/main/java/domain" + "/fichier.txt";
+		        System.out.print(adressedufichier);
+		
+		        //on met try si jamais il y a une exception
+		       
+	            /**
+	                * BufferedWriter a besoin d un FileWriter, 
+	                * les 2 vont ensemble, on donne comme argument le nom du fichier
+	                * true signifie qu on ajoute dans le fichier (append), on ne marque pas par dessus 
 	
-	        //on met try si jamais il y a une exception
-	       
-            /**
-                * BufferedWriter a besoin d un FileWriter, 
-                * les 2 vont ensemble, on donne comme argument le nom du fichier
-                * true signifie qu on ajoute dans le fichier (append), on ne marque pas par dessus 
-
-                */
-            FileWriter fw = new FileWriter(adressedufichier, true);
-
-            // le BufferedWriter output auquel on donne comme argument le FileWriter fw cree juste au dessus
-            BufferedWriter output = new BufferedWriter(fw);
-
-            //Ecriture de la balise d'ouverture <prof>
-            output.write("<prof>");
-            
-            //Ecriture du nom
-            output.write("<nom>");
-            output.write(nom);
-            output.write("</nom>");
-            
-            //Ecriture du prenom
-            output.write("<prenom>");
-            output.write(prenom);
-            output.write("</prenom>");
-            
-            //Ecriture de l'email
-            output.write("<mail>");
-            output.write(mail);
-            output.write("</mail>");
-            
-            //Ecriture de l'adresse
-            output.write("<adresse>");
-            output.write(adresse);
-            output.write("</adresse>");
-            
-            //Ecriture de la Latitude
-            output.write("<latitude>");
-            output.write(String.valueOf(latitude));
-            output.write("</latitude>");
-            
-            //Ecriture de la Longitude
-            output.write("<longitude>");
-            output.write(String.valueOf(longitude));
-            output.write("</longitude>");
-            
-            //Ecriture de la balise fermeture </prof>
-            output.write("</prof>");
-
-            //On revient à la ligne.
-            output.write("\n");
-            
-
-            output.flush();
-            //ensuite flush envoie dans le fichier, ne pas oublier cette methode pour le BufferedWriter
-
-            output.close();
-            //et on le ferme
-            System.out.println("fichier créé ou modifier");
-	        
-         
+	                */
+	            FileWriter fw = new FileWriter(adressedufichier, true);
+	
+	            // le BufferedWriter output auquel on donne comme argument le FileWriter fw cree juste au dessus
+	            BufferedWriter output = new BufferedWriter(fw);
+	
+	            //Ecriture de la balise d'ouverture <prof>
+	            output.write("<prof>");
+	            
+	            //Ecriture du nom
+	            output.write("<nom>");
+	            output.write(nom);
+	            output.write("</nom>");
+	            
+	            //Ecriture du prenom
+	            output.write("<prenom>");
+	            output.write(prenom);
+	            output.write("</prenom>");
+	            
+	            //Ecriture de l'email
+	            output.write("<mail>");
+	            output.write(mail);
+	            output.write("</mail>");
+	            
+	            //Ecriture de l'adresse
+	            output.write("<adresse>");
+	            output.write(adresse);
+	            output.write("</adresse>");
+	            
+	            //Ecriture de la Latitude
+	            output.write("<latitude>");
+	            output.write(String.valueOf(latitude));
+	            output.write("</latitude>");
+	            
+	            //Ecriture de la Longitude
+	            output.write("<longitude>");
+	            output.write(String.valueOf(longitude));
+	            output.write("</longitude>");
+	            
+	            //Ecriture de la balise fermeture </prof>
+	            output.write("</prof>");
+	
+	            //On revient à la ligne.
+	            output.write("\n");
+	            
+	
+	            output.flush();
+	            //ensuite flush envoie dans le fichier, ne pas oublier cette methode pour le BufferedWriter
+	
+	            output.close();
+	            //et on le ferme
+	            System.out.println("fichier créé ou modifier");
+		        
+			}
 		}
 		
         catch(IOException ioe){
@@ -117,6 +149,18 @@ public class InscriptionServiceImpl implements InscriptionService{
                 }
 		
 		//retourner réponse XML de bonne inscription
+		try {
+			elem = XmlHelper.getRootElementFromFileInClasspath("Inscription.xml");
+		} catch (ParserConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SAXException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return elem;
 	}

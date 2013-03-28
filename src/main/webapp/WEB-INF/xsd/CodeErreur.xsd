@@ -1,0 +1,17 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:hr="http://iaws/ws/contractfirst/exemple"
+        elementFormDefault="qualified"
+        targetNamespace="http://iaws/ws/contractfirst/exemple">
+        
+        
+    <xs:element name="CodeErreur" type="exem:CodeErreurType" xmlns:exem="http://iaws/ws/contractfirst/exemple"/>
+    
+        <xs:complexType name="CodeErreurType">
+            <xs:all>
+                <xs:element name="code" type="xs:integer"/>				
+				<xs:element name="texte" type="xs:string"/>
+            </xs:all>
+        </xs:complexType>
+    
+    
+</xs:schema>
