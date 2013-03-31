@@ -10,9 +10,15 @@ public class Prof {
 	private double latitude;
 	private double longitude;
 	
-	public Prof(String nom2, String prenom2, String mail2, String adresse2,
-			double latitude2, double longitude2) {
-		
+	public Prof(String nom, String prenom, String mail, String adresse,
+			double latitude, double longitude) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.mail = mail;
+		this.adresse = adresse;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
 	public String getNom() {

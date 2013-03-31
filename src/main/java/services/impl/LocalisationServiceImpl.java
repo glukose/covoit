@@ -26,16 +26,16 @@ public class LocalisationServiceImpl implements LocalisationService {
 		String adresse;
 		String lat;
 		String longi;
-		Boolean trouve = false;
 		
 		//lecture du fichier texte	
 		try{
-			InputStream ips=new FileInputStream("fichier.txt"); 
+			
+			String adressedufichier = System.getProperty("user.dir") + "/src/domain" + "/fichier.txt";
+			InputStream ips=new FileInputStream(adressedufichier); 
 			InputStreamReader ipsr=new InputStreamReader(ips);
 			BufferedReader br=new BufferedReader(ipsr);
 			String ligne;
 			while ((ligne=br.readLine())!=null){
-				System.out.println(ligne);
 				
 				index_debut=ligne.indexOf("<nom>", 0) + 5;
 				index_fin=ligne.indexOf("</nom>", index_debut);
@@ -61,25 +61,26 @@ public class LocalisationServiceImpl implements LocalisationService {
 				index_fin=ligne.indexOf("</longitude>", index_debut);
 				longi = ligne.substring(index_debut, index_fin);
 				
-				Prof prof;
-				listeMembre.addElement(prof = new Prof(nom, prenom, mail, adresse, Double.parseDouble(lat), Double.parseDouble(longi)));
-
+				Prof prof = new Prof(nom, prenom, mail, adresse, Double.parseDouble(lat), Double.parseDouble(longi));
+				listeMembre.addElement(prof);				
 				
 			}
 			br.close(); 
+			
+
+		
 		}		
 		catch (Exception e){
 			System.out.println(e.toString());
 		}
 		
-		while (i<listeMembre.size() || trouve == false)
+		for(i = 0; i<listeMembre.size(); i++)
 		{
-			if(perimetre <= distFrom(latitude, longitude, listeMembre.elementAt(i).getLatitude(), listeMembre.elementAt(i).getLongitude())){
+			if(perimetre >= distFrom(latitude, longitude, listeMembre.elementAt(i).getLatitude(), listeMembre.elementAt(i).getLongitude())){
 				
 				listeProf.add(listeMembre.elementAt(i));
 			}
 		}
-		
 		
 		return listeProf;
 		
