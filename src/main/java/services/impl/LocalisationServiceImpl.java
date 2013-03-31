@@ -74,16 +74,29 @@ public class LocalisationServiceImpl implements LocalisationService {
 		
 		while (i<listeMembre.size() || trouve == false)
 		{
-			if((perimetre >= listeMembre.elementAt(i).getLatitude() - latitude) 
-					&& (perimetre >= listeMembre.elementAt(i).getLongitude() - longitude))
-			{
-				listeProf.addElement((listeMembre.elementAt(i)));
+			if(perimetre <= distFrom(latitude, longitude, listeMembre.elementAt(i).getLatitude(), listeMembre.elementAt(i).getLongitude())){
+				
+				listeProf.add(listeMembre.elementAt(i));
 			}
 		}
 		
 		
 		return listeProf;
 		
+	}
+	
+	public double distFrom(double lat1, double lng1, double lat2, double lng2) {
+		
+	    double earthRadius = 3958.75;
+	    double dLat = Math.toRadians(lat2-lat1);
+	    double dLng = Math.toRadians(lng2-lng1);
+	    double sindLat = Math.sin(dLat / 2);
+	    double sindLng = Math.sin(dLng / 2);
+	    double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2) * Math.cos(lat1) * Math.cos(lat2);
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+	    double dist = earthRadius * c;
+
+	    return dist;
 	}
 
 }
